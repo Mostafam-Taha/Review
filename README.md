@@ -14,7 +14,7 @@
 | تاريخ الإنشاء | 8 أغسطس 2026 |
 | اللغة المستخدمة | Python |
 | نوع المشروع | Console Application |
-| رابط الملف على GitHub | [أضف الرابط هنا بعد الرفع] |
+| رابط الملف على GitHub | [https://github.com/Mostafam-Taha/Review/blob/main/learn.py] |
 
 ---
 
