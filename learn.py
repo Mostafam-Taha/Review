@@ -131,7 +131,7 @@ def main():
         elif choose_menu == "6":
             remove_book()
         else:
-            # print("Exit, Thank you", user_name)
+            print("Exit, Thank you", user_name)
             break
 
-# main()
+main()
