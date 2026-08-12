@@ -99,3 +99,75 @@ python learn.py
 - [ ] (اختياري) تحويل تخزين البيانات من قوائم منفصلة إلى Dictionary لكل كتاب
 
 </details>
+
+---
+
+# 🏧 ATM Simulator
+
+برنامج بسيط بيحاكي ماكينة صراف آلي (ATM) عن طريق الـ Command Line، بيدخل المستخدم PIN أول حاجة، وبعدين يقدر يعرض رصيده، يودع، أو يسحب فلوس.
+
+| البيان | التفاصيل |
+|---|---|
+| تاريخ الإنشاء | 12 أغسطس 2026 |
+| اللغة المستخدمة | Python |
+| نوع المشروع | Console Application |
+| صاحب المشروع | **mostafamtaha** |
+
+### ▶️ طريقة التشغيل
+
+```bash
+python ATM_Simulator.py
+```
+
+بعد التشغيل هيطلب منك البرنامج تدخل الـ PIN (عندك 3 محاولات)، ولو صح هتظهرلك القائمة الرئيسية للاختيار من بين العمليات المتاحة.
+
+<details>
+<summary><strong>⚙️ اضغط لعرض الوظائف المتاحة (Features)</strong></summary>
+
+<br>
+
+| # | الوظيفة | الوصف |
+|---|---|---|
+| 1 | Show Balance | عرض الرصيد الحالي |
+| 2 | Deposit | إيداع مبلغ (مرفوض لو المبلغ سالب) |
+| 3 | Withdraw | سحب مبلغ (مرفوض لو أكبر من الرصيد أو سالب) |
+| 0 | Exit | الخروج من البرنامج |
+
+**PIN Protection**: نظام دخول بـ PIN محدد بـ 3 محاولات، ولو فشلت كلها البرنامج بيقفل.
+
+</details>
+
+<details>
+<summary><strong>🧠 اضغط لعرض المفاهيم البرمجية المستخدمة</strong></summary>
+
+<br>
+
+- ✅ Variables & Data Types
+- ✅ Conditionals (if / elif / else)
+- ✅ Loops (while)
+- ✅ Functions
+- ✅ Type Casting (تحويل الـ input من str لـ int)
+- ⏳ Exception Handling *(قيد الإضافة)*
+
+</details>
+
+<details>
+<summary><strong>🐛 اضغط لعرض حالة المشروع الحالية (Known Issues)</strong></summary>
+
+<br>
+
+- **Error Handling**: مفيش تعامل مع الأخطاء لو المستخدم دخل حروف بدل أرقام.
+- الدوال بتعتمد على `global balance` بدل إنها تاخد وترجع القيمة كـ parameter.
+
+</details>
+
+<details>
+<summary><strong>🚀 اضغط لعرض الخطوات القادمة (To-Do)</strong></summary>
+
+<br>
+
+- [ ] إضافة Exception Handling (try/except) لكل عمليات الإدخال
+- [ ] إزالة الاعتماد على `global balance` واستخدام parameters بدل منها
+- [ ] تحسين أسامي المتغيرات (زي `user_Experins`)
+
+</details>
