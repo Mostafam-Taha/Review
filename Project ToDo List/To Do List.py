@@ -1,3 +1,4 @@
+import os
 import csv
 from datetime import datetime
 
@@ -9,12 +10,21 @@ def show_menu():
     print("2. Show All Tasks")
     print("0. Exit")
 
+def load_tasks():
+    global data
+    if os.path.isfile(name_files):
+        with open(name_files, "r", newline="") as f:
+            reader = csv.DictReader(f)
+            data = list(reader)
+
 def file_save():
+    file_exists = os.path.isfile(name_files)
     with open(name_files, "a", newline="") as create_file:
-        x  = ["name", "created_at", "done"]
-        create_filnalty = csv.DictWriter(create_file, x)
-        create_filnalty.writeheader()
-        create_filnalty.writerows(data)
+        x = ["name", "created_at", "done"]
+        writer = csv.DictWriter(create_file, x)
+        if not file_exists:
+            writer.writeheader()
+        writer.writerow(data[-1])
 
 def add_to_task():
     add_input_task = input("Please Enter is new task: ")
@@ -36,6 +46,7 @@ def show_all_tasks():
             print (f"{row["name"]} | {row["created_at"]} | {row["done"]}")
 
 def main():
+    load_tasks()
     while True:
         show_menu()
 
@@ -51,5 +62,4 @@ def main():
         else:
             print("Thank You!")
             break
-
 main()
