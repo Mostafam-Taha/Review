@@ -78,16 +78,29 @@ class Student_Management_System:
             w_create_file = csv.DictWriter(create_new_file_after_remove, fieldnames=fieldnames)
             w_create_file.writerows(new_student)
 
-    def update_grade():
-        update_in_name = input("Please enter name update grade: ")
+    def update_student(self):
+        with open(file_system_management, "r") as update_d:
+            update_d_student = csv.DictReader(update_d)
+            for row in update_d_student:
+                print(f"  {row["ID"]}: {row["Name"]} | {row["Grade"]} | {row["Created_at"]}")
+                print("  -" * 10)
+
+    def find_student(self):
         while True:
             try:
-                update_in_grade = float(input(f"Please enter grade is {update_in_name}: "))
+                find_in_ID = int(input("Please enter is ID: "))
                 break
             except ValueError:
-                print("Error: Please enter is number not charater.")
-        with open(file_system_management, "r") as update_grade_student:
-            update_grade_find = csv.DictReader(update_grade_student)
-            for i in update_grade_find:
-                
-Student_Management_System().update_grade()
+                print("Error: Please enter is ID, Not Other.")
+        with open(file_system_management, "r") as f:
+            f_find_student = csv.DictReader(f)
+            found = False
+            for i in f_find_student:
+                if int(i["ID"]) == find_in_ID:
+                    print(f"{i["ID"]}: {i["Name"]} - {i["Grade"]} - {i["Created_at"]}")
+                    found = True
+                    break
+
+            if not found:
+                print("Error: No student found with this ID.")
+Student_Management_System().find_student()
