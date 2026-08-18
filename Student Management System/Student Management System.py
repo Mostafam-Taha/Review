@@ -27,19 +27,26 @@ class Student_Management_System:
     def add_student(self):
         global fieldnames
         # Name
-        while True:
-            try:
-                add_in_name = input("Please enter is name: ")
-                break
-            except ValueError:
-                print("Error: Please Enter is character.")
+        add_in_name = input("Please enter is name: ")
+
         # ID
         while True:
             try:
                 add_in_ID = int(input(f"Please Enter is ID {add_in_name}: "))
-                break
             except ValueError:
                 print("Error: Please Enter Is Number not Chracter and Floating number.")
+                continue
+
+            # تحقق من التكرار
+            if os.path.isfile(file_system_management):
+                with open(file_system_management, "r") as check_file:
+                    existing_students = csv.DictReader(check_file)
+                    duplicate = any(int(row["ID"]) == add_in_ID for row in existing_students)
+                if duplicate:
+                    print(f"Error: ID {add_in_ID} already exists. Please enter a different ID.")
+                    continue
+            break
+
         # Grade
         while True:
             try:
@@ -62,7 +69,7 @@ class Student_Management_System:
             if not file_exsits:
                 reader.writeheader()
             reader.writerow(new_student)
-
+            
     def remove_student(self):
         global fieldnames
         remove_in_student = input("Please select student and remove: ")
