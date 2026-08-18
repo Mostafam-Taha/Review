@@ -17,27 +17,26 @@ class Student_Management_System:
         print("1. Add Student")
         print("2. Remove Student")
         # print("3. Update Grade")
-        print("3. Displat All Students")
+        print("3. Display All Students")
         print("4. Find Student")
-        # print("6. Calculate Avarage")
+        # print("6. Calculate Average")
         print("5. Top and Bottom Student")
-        # print("6. Sort Students By Avarage")
+        # print("6. Sort Students By Average")
         print("0. Exit")
 
     def add_student(self):
         global fieldnames
         # Name
-        add_in_name = input("Please enter is name: ")
+        add_in_name = input("Please enter his name: ")
 
         # ID
         while True:
             try:
-                add_in_ID = int(input(f"Please Enter is ID {add_in_name}: "))
+                add_in_ID = int(input(f"Please enter the ID for {add_in_name}: "))
             except ValueError:
-                print("Error: Please Enter Is Number not Chracter and Floating number.")
+                print("Error: Please enter a valid integer number, not characters or decimals.")
                 continue
 
-            # تحقق من التكرار
             if os.path.isfile(file_system_management):
                 with open(file_system_management, "r") as check_file:
                     existing_students = csv.DictReader(check_file)
@@ -50,10 +49,10 @@ class Student_Management_System:
         # Grade
         while True:
             try:
-                add_in_grade = float(input(f"Please enter is grade {add_in_name}: "))
+                add_in_grade = float(input(f"Please enter the grade for {add_in_name}: "))
                 break
             except ValueError:
-                print("Error: Please enter number not character.")
+                print("Error: Please enter a number, not characters.")
 
         created_at = datetime.now().strftime("%B-%Y-%d %H:%M:%S")
         new_student = {
@@ -69,10 +68,10 @@ class Student_Management_System:
             if not file_exsits:
                 reader.writeheader()
             reader.writerow(new_student)
-            
+
     def remove_student(self):
         global fieldnames
-        remove_in_student = input("Please select student and remove: ")
+        remove_in_student = input("Please select student name to remove: ")
 
         with open(file_system_management, "r") as f:
             find_student = csv.DictReader(f)
@@ -80,6 +79,7 @@ class Student_Management_System:
             for sor in find_student:
                 if sor["Name"] != remove_in_student:
                     new_student.append(sor)
+                    
         with open(file_system_management, "w", newline="") as create_new_file_after_remove:
             w_create_file = csv.DictWriter(create_new_file_after_remove, fieldnames=fieldnames)
             w_create_file.writeheader()
@@ -95,10 +95,10 @@ class Student_Management_System:
     def find_student(self):
         while True:
             try:
-                find_in_ID = int(input("Please enter is ID: "))
+                find_in_ID = int(input("Please enter the ID: "))
                 break
             except ValueError:
-                print("Error: Please enter is ID, Not Other.")
+                print("Error: Please enter a valid numeric ID.")
         with open(file_system_management, "r") as f:
             f_find_student = csv.DictReader(f)
             found = False
@@ -132,10 +132,10 @@ def main():
 
         while True:
             try:
-                user_choose = int(input("Please enter is number: "))
+                user_choose = int(input("Please select an option number: "))
                 break
             except ValueError:
-                print("Error: Enter is number.")
+                print("Error: Please enter a valid number.")
         if user_choose == 1:
             class_sms.add_student()
         elif user_choose == 2:
