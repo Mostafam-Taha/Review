@@ -75,6 +75,7 @@ class Student_Management_System:
                     new_student.append(sor)
         with open(file_system_management, "w", newline="") as create_new_file_after_remove:
             w_create_file = csv.DictWriter(create_new_file_after_remove, fieldnames=fieldnames)
+            w_create_file.writeheader()
             w_create_file.writerows(new_student)
 
     def show_all_student(self):
@@ -118,8 +119,9 @@ class Student_Management_System:
             print(f"{student['ID']}: {student['Name']} | {student['Grade']} | {student['Created_at']}")
 
 def main():
+    class_sms = Student_Management_System()
     while True:
-        Student_Management_System().show_menu()
+        class_sms.show_menu()
 
         while True:
             try:
@@ -128,15 +130,15 @@ def main():
             except ValueError:
                 print("Error: Enter is number.")
         if user_choose == 1:
-            Student_Management_System().add_student()
+            class_sms.add_student()
         elif user_choose == 2:
-            Student_Management_System().remove_student()
+            class_sms.remove_student()
         elif user_choose == 3:
-            Student_Management_System().show_all_student()
+            class_sms.show_all_student()
         elif user_choose == 4:
-            Student_Management_System().find_student()
+            class_sms.find_student()
         elif user_choose == 5:
-            Student_Management_System().sort_students_by_grade()
+            class_sms.sort_students_by_grade()
         else:
             print("Thank you.")
             break
