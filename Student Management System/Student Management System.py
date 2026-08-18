@@ -16,13 +16,12 @@ class Student_Management_System:
         print("Welcome To User")
         print("1. Add Student")
         print("2. Remove Student")
-        print("3. Update Grade")
-        print("4. Displat All Students")
-        print("5. Find Student")
-        print("6. Calculate Avarage")
-        print("7. Get Letter Grade")
-        print("8. Top and Bottom Student")
-        print("9. Sort Students By Avarage")
+        # print("3. Update Grade")
+        print("3. Displat All Students")
+        print("4. Find Student")
+        # print("6. Calculate Avarage")
+        print("5. Top and Bottom Student")
+        # print("6. Sort Students By Avarage")
         print("0. Exit")
 
     def add_student(self):
@@ -78,10 +77,10 @@ class Student_Management_System:
             w_create_file = csv.DictWriter(create_new_file_after_remove, fieldnames=fieldnames)
             w_create_file.writerows(new_student)
 
-    def update_student(self):
-        with open(file_system_management, "r") as update_d:
-            update_d_student = csv.DictReader(update_d)
-            for row in update_d_student:
+    def show_all_student(self):
+        with open(file_system_management, "r") as show_d:
+            show_d_student = csv.DictReader(show_d)
+            for row in show_d_student:
                 print(f"  {row["ID"]}: {row["Name"]} | {row["Grade"]} | {row["Created_at"]}")
                 print("  -" * 10)
 
@@ -103,4 +102,43 @@ class Student_Management_System:
 
             if not found:
                 print("Error: No student found with this ID.")
-Student_Management_System().find_student()
+
+    def sort_students_by_grade(self):
+        with open(file_system_management, "r") as s:
+            reader = csv.DictReader(s)
+            all_students = list(reader)
+
+        sorted_students = sorted(
+            all_students,
+            key=lambda student: float(student["Grade"]),
+            reverse=True
+        )
+
+        for student in sorted_students:
+            print(f"{student['ID']}: {student['Name']} | {student['Grade']} | {student['Created_at']}")
+
+def main():
+    while True:
+        Student_Management_System().show_menu()
+
+        while True:
+            try:
+                user_choose = int(input("Please enter is number: "))
+                break
+            except ValueError:
+                print("Error: Enter is number.")
+        if user_choose == 1:
+            Student_Management_System().add_student()
+        elif user_choose == 2:
+            Student_Management_System().remove_student()
+        elif user_choose == 3:
+            Student_Management_System().show_all_student()
+        elif user_choose == 4:
+            Student_Management_System().find_student()
+        elif user_choose == 5:
+            Student_Management_System().sort_students_by_grade()
+        else:
+            print("Thank you.")
+            break
+
+main()
