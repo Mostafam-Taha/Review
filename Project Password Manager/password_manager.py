@@ -16,8 +16,17 @@ class Login_Password_Manager:
         self.password = password
 
     def sign_in(self):
-        in_username = input("Enter your username: ")
-        
+        while True:
+            in_username = input("Enter your username: ")
+
+            if os.path.isfile(file_system_management):
+                with open(file_system_management, "r") as check_file:
+                    find_username_check = csv.DictReader(check_file)
+                    duplicate = any(row["Username"] == in_username for row in find_username_check)
+                if duplicate:
+                    print(f"Error: Username {in_username} already exists. Please enter a different Username.")
+                    continue
+            break
         in_password = input("Enter your password: ")
 
         in_user_ID = random.randint(1000000,1000000000)
@@ -37,6 +46,51 @@ class Login_Password_Manager:
             if not file_exist:
                 file_user.writeheader()
             file_user.writerow(new_sign_in_user_manager)
-            
-user = Login_Password_Manager("Mostafa", 1234)
-user.login()
+
+    def login(self):
+        with open(file_system_management, "r") as file_reader:
+            reader = csv.DictReader(file_reader)
+            lo_username = input("Enter your username: ")
+            lo_password = input("Please enter your password: ")
+
+            found = False
+            for i in reader:
+                if lo_username == i["Username"] and lo_password == i["Password"]:
+                    print("done", lo_username, lo_password) # تعديل
+                    found = True
+                    break
+
+            if not found:
+                print("Error: Incorrent.")
+
+def show_menu_account():
+    print("Welcome To User")
+    print("1. Sign_UP")
+    print("2. Login")
+    print("3. Switch Accounts")
+
+def log_main():
+    user_manager = Login_Password_Manager("Mostafamtaha", 1234)
+
+    while True:
+        while True:
+            show_menu_account()
+
+            try:
+                user_select = int(input("Pealse select an option number: "))
+                break
+            except ValueError:
+                print("Error: Option number.")
+                continue
+
+        if user_select == 1:
+            user_manager.sign_in()
+        elif user_select == 2:
+            user_manager.login()
+        elif user_select == 3:
+            pass
+        else:
+            print("Thank you!")
+            break
+
+log_main()
