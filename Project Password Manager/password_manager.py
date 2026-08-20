@@ -67,6 +67,7 @@ class Password_Manager:
     def add_new_password(self):
         application_password = input("Please enter your application: ")
         choose_app = input("Do you want to create a random password Y/n: ")
+        URL_application = input(f"Please enter your URL {application_password}: ")
 
         application_random = None
         in_user_password_m = None
@@ -111,11 +112,54 @@ class Password_Manager:
             for show_all  in reader:
                 print(f"{show_all['Application']:<20}: {show_all['Password']:<15} | {show_all['Random Password']:<20} | {show_all['Created_at']:<25}")
 
+    def search_to_password(self):
+
+        with open(file_system_user_acc, "r") as file_reader:
+            reader = csv.DictReader(file_reader)
+
+            found = False
+            search_application = input("Enter your application: ")
+            for search in reader:
+                if search_application in search["Application"]:
+                    print(f"{search['Application']:<10}{search['Password']:<8}{search['Random Password']:<10}{search['Created_at']:<10}")
+                    found = True
+                    break
+
+            if not found:
+                print("Application not found.")
+
+
 def show_menu_account():
     print("Welcome To User")
     print("1. Sign_UP")
     print("2. Login")
     print("3. Switch Accounts")
+    print("4. Login_account_manager (Bita)")
+
+def show_menu():
+    user = Login_Password_Manager("Mostafamtaha", 1234)
+    print(f"==== Welcome To {user.username}")
+    print("1. Add New Password")
+    print("2. Show All Password")
+    print("3. Search To Password")
+
+def main():
+    user_manager = Login_Password_Manager("Mostafamtaha", 1234)
+    user = Password_Manager()
+
+    while True:
+        show_menu()
+        choose_value = int(input("Please enter you option: "))
+
+        if choose_value == 1:
+            user.add_new_password()
+        elif choose_value == 2:
+            user.show_all_password()
+        elif choose_value == 3:
+            user.search_to_password()
+        else:
+            print(f"Thank You {user_manager.username}")
+            break
 
 def log_main():
     user_manager = Login_Password_Manager("Mostafamtaha", 1234)
@@ -137,12 +181,10 @@ def log_main():
             user_manager.login()
         elif user_select == 3:
             pass
+        elif user_select == 4:
+            main()
         else:
             print("Thank you!")
             break
 
-# log_main()
-
-
-s = Password_Manager()
-s.show_all_password()
+log_main()
