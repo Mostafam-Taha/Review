@@ -1,14 +1,11 @@
 # Password Manager
-# 1. انشاء حساب خاص بالمستخدم, يكون (اسم المستخدم, كلمة المرور)
-# 2. طلب من المستخدم ادخال كلمة المرور فى كل مره يطلب يريد عرض كلمة مرور ما
-# 3. فتح نفاذة القوائم للختيار
-# 4. اذا كانت هناك اي بيانات خطأ لا يتم الارسال إللى قائمة الاختيارات الخاصة بالبرنامج ابدًا
 import os
 import csv
 import random
 from datetime import datetime
 
-file_system_management = "Project Password Manager/password.csv"
+file_system_management = "Project Password Manager/data_user.csv"
+file_system_user_acc = "Project Password Manager/password.csv"
 
 class Login_Password_Manager:
     def __init__(self, username, password):
@@ -63,6 +60,57 @@ class Login_Password_Manager:
             if not found:
                 print("Error: Incorrent.")
 
+class Password_Manager:
+    def __init__(self):
+        pass
+
+    def add_new_password(self):
+        application_password = input("Please enter your application: ")
+        choose_app = input("Do you want to create a random password Y/n: ")
+
+        application_random = None
+        in_user_password_m = None
+        while True:
+            if choose_app == "Y":
+                application_random = random.randint(10000000, 100000000000)
+                in_random_ag = input(f"Dono: Create Password this: {application_random} Y/n: ")
+                if in_random_ag == "Y":
+                    application_random = random.randint(10000000, 100000000000)
+                    in_random_ag_loop = input(f"Dono: Create Password this: {application_random} Y/n: ")
+                    if in_random_ag_loop == "Y":
+                        continue
+                    else:
+                        break
+                else:
+                    break
+            else:
+                in_user_password_m = input("Please Enter you password: ")
+                break
+
+        created_at = datetime.now().strftime("%B-%Y-%d %H:%M:%S")
+        new_add_passwrod = {
+            "Application": application_password,
+            "Password": in_user_password_m if not application_random else None,
+            "Random Password": application_random if application_random else None,
+            "Created_at": created_at
+        }
+
+        fieldnames = ["Application", "Password", "Random Password", "Created_at"]
+
+        file_exist = os.path.isfile(file_system_user_acc)
+        with open(file_system_user_acc, "a", newline="") as file_user_acc:
+            file_re = csv.DictWriter(file_user_acc, fieldnames=fieldnames)
+            if not file_exist:
+                file_re.writeheader()
+            file_re.writerow(new_add_passwrod)
+
+    def show_all_password(self):
+        with open(file_system_user_acc, "r") as file_reader:
+            reader = csv.DictReader(file_reader)
+            print(f"{'Application':<20}{'Password':<15}{'Random Password':<20}{'Created_at':<25}")
+            for show_all  in reader:
+                print(f"{show_all['Application']:<20}: {show_all['Password']:<15} | {show_all['Random Password']:<20} | {show_all['Created_at']:<25}")
+
 def show_menu_account():
     print("Welcome To User")
     print("1. Sign_UP")
@@ -93,4 +141,8 @@ def log_main():
             print("Thank you!")
             break
 
-log_main()
+# log_main()
+
+
+s = Password_Manager()
+s.show_all_password()
